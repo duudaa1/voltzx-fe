@@ -1,103 +1,82 @@
-import Image from "next/image";
+"use client"
+import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import logo from './public/voltz-x-logo-dark.png';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const router = useRouter();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+  return (
+    <div className="font-sans">
+      <header className="flex items-center justify-between px-6 py-4 bg-white shadow">
+        <div className="text-2xl font-bold text-yellow-500">
+          <Link href="/">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src="/voltz-x-logo-dark.png"
+              alt="Logo VoltzX"
+              className="h-10 w-auto"
+              width={160}
+              height={40}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+
+          </Link>
         </div>
+
+        <nav className="space-x-6 text-sm font-medium text-gray-700">
+          <a href="#">Sobre</a>
+          <a href="#">Serviços</a>
+          <a href="#">Contato</a>
+          <a href="#">Como funciona?</a>
+          <button
+            onClick={() => router.push('/register')}
+            className="bg-yellow-400 px-4 py-2 rounded font-semibold text-white hover:bg-yellow-500"
+          >
+            Comece já!
+          </button>
+        </nav>
+      </header>
+
+      <main className="px-6 py-10 text-center">
+        <h1 className="text-3xl font-bold leading-tight mb-4">
+          Transformamos terra em energia, conexão em oportunidade e sol em progresso.
+        </h1>
+        <p className="text-gray-700 max-w-3xl mx-auto mb-10">
+          A VoltzX é a conexão inteligente que transforma o potencial do sol em oportunidades reais de negócio. Com tecnologia de ponta e foco em sustentabilidade, fazemos da inovação o combustível para gerar impacto positivo e resultados concretos.
+        </p>
+
+        <section className="bg-yellow-100 py-10">
+          <h2 className="font-bold text-lg mb-6 text-black">
+            Somos a <span className="underline">ponte</span> entre proprietários de terrenos, empresas inovadoras e investidores estratégicos, unindo forças para acelerar a <span className="underline">revolução da energia solar</span> no Brasil.
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div className="bg-orange-400 text-white p-6 rounded">
+              <h3 className="font-bold text-lg mb-2">Para Proprietários de Terrenos</h3>
+              <p className="text-sm">
+                Cadastram terrenos e os disponibilizam no marketplace, recebem propostas de empresas para desenvolvimento de projetos solares, aprovam ou rejeitam essas propostas e acompanham o andamento dos projetos e ofertas de investimento no painel de monitoramento.
+              </p>
+              <button className="mt-4 bg-yellow-400 text-black px-4 py-2 rounded">Saiba mais</button>
+            </div>
+
+            <div className="bg-orange-400 text-white p-6 rounded">
+              <h3 className="font-bold text-lg mb-2">Para Empresas de Energia Solar</h3>
+              <p className="text-sm">
+                Buscam terrenos no marketplace, criam e vinculam projetos solares, enviam propostas aos proprietários e gerenciam as ofertas de investimento feitas por investidores, tudo com relatórios dedicados e transparência para garantir decisões ágeis e transparentes.
+              </p>
+              <button className="mt-4 bg-yellow-400 text-black px-4 py-2 rounded">Saiba mais</button>
+            </div>
+
+            <div className="bg-orange-400 text-white p-6 rounded">
+              <h3 className="font-bold text-lg mb-2">Para Investidores</h3>
+              <p className="text-sm">
+                Visualizam projetos disponíveis para investimento, enviam ofertas financeiras, participam da aprovação conjunta com empresas e proprietários, e monitoram o desempenho dos projetos investidos por meio de um painel dedicado com comunicação centralizada.
+              </p>
+              <button className="mt-4 bg-yellow-400 text-black px-4 py-2 rounded">Saiba mais</button>
+            </div>
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }

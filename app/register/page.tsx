@@ -1,21 +1,20 @@
-"use client"
+'use client';
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { registrarUsuario } from '../services/api';
-import React from 'react';
-
+import { registrarUsuario } from '@/services/api';
 
 export default function Register() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
-  const [role, setRole] = useState('proprietario');
+  const [role, setRole] = useState<'proprietario' | 'empresa' | 'investidor'>('proprietario');
 
   const router = useRouter();
 
-    const handleRegister = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (password !== confirm) {
@@ -36,16 +35,15 @@ export default function Register() {
 
   return (
     <div className="p-4 max-w-sm mx-auto">
-      <h2 className="text-xl mb-4">Cadastro</h2>
+      <h2 className="text-xl font-semibold mb-4 text-center">Cadastro</h2>
 
-      <form onSubmit={handleRegister}>
+      <form onSubmit={handleRegister} className="flex flex-col gap-3">
         <input
           type="text"
           placeholder="Nome"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
-          className="p-2 border border-gray-300 rounded w-full mb-4"
-          required
+          className="p-2 border border-gray-300 rounded"
         />
 
         <input
@@ -53,8 +51,7 @@ export default function Register() {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="block w-full mb-2 p-2 border rounded"
-          required
+          className="p-2 border border-gray-300 rounded"
         />
 
         <input
@@ -62,8 +59,7 @@ export default function Register() {
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="block w-full mb-2 p-2 border rounded"
-          required
+          className="p-2 border border-gray-300 rounded"
         />
 
         <input
@@ -71,23 +67,23 @@ export default function Register() {
           placeholder="Confirmar Senha"
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
-          className="block w-full mb-2 p-2 border rounded"
-          required
+          className="p-2 border border-gray-300 rounded"
         />
 
         <select
           value={role}
-          onChange={(e) => setRole(e.target.value)}
-          className="block w-full mb-4 p-2 border rounded"
+          onChange={(e) => setRole(e.target.value as 'proprietario' | 'empresa' | 'investidor')}
+          className="p-2 border border-gray-300 rounded"
         >
           <option value="proprietario">Proprietário</option>
           <option value="empresa">Empresa</option>
           <option value="investidor">Investidor</option>
         </select>
 
+
         <button
           type="submit"
-          className="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600"
+          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
         >
           Cadastrar
         </button>
