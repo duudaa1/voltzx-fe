@@ -36,6 +36,7 @@ interface Oferta {
   rejeitadaProprietario: boolean;
 }
 
+
 export default function InvestidorDashboard() {
   const [projetos, setProjetos] = useState<Projeto[]>([]);
   const [erro, setErro] = useState('');
@@ -100,90 +101,102 @@ export default function InvestidorDashboard() {
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Projetos Disponíveis para Investimento</h2>
-      {erro && <p className="text-red-600 text-center">{erro}</p>}
+<div className="p-8 max-w-5xl mx-auto">
+    {/* Cabeçalho */}
+  <header className="bg-white border-b border-neutral-300 p-6">
+    <h1 className="text-2xl font-bold text-center text-[#F26A21]">
+      Plataforma de Gestão de Terrenos - INVESTIDOR
+    </h1>
+  </header>
+  <h2 className="text-3xl font-bold mb-6">Projetos Disponíveis para Investimento</h2>
 
-      {projetos.length === 0 ? (
-        <p className="text-center text-gray-500">Nenhum projeto disponível.</p>
-      ) : (
-        <div className="grid gap-4 mb-6">
-          {projetos.map((projeto) => (
-            <div key={projeto.id} className="bg-white shadow-md rounded p-4">
-              <h3 className="text-xl font-semibold">{projeto.nome}</h3>
-              <p><strong>Descrição:</strong> {projeto.descricao}</p>
-              <p><strong>Localização:</strong> {projeto.terreno.cidade} - {projeto.terreno.estado}</p>
-              <p><strong>Tamanho:</strong> {projeto.terreno.tamanho} m²</p>
-              <p><strong>Empresa:</strong> {projeto.empresa.nome}</p>
-              <button
-                onClick={() => abrirModal(projeto)}
-                className="mt-2 bg-blue-600 text-white px-4 py-2 rounded"
-              >
-                Enviar Proposta de Investimento
-              </button>
-            </div>
-          ))}
+  {erro && <p className="text-red-600 text-center">{erro}</p>}
+
+  {projetos.length === 0 ? (
+    <p className="text-center text-neutral-500">Nenhum projeto disponível.</p>
+  ) : (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+      {projetos.map((projeto) => (
+        <div key={projeto.id} className="bg-white rounded-2xl shadow-md p-6 border border-neutral-200">
+          <h3 className="text-xl font-semibold mb-2">{projeto.nome}</h3>
+          <p className="mb-1"><span className="font-medium">Descrição:</span> {projeto.descricao}</p>
+          <p className="mb-1"><span className="font-medium">Localização:</span> {projeto.terreno.cidade} - {projeto.terreno.estado}</p>
+          <p className="mb-1"><span className="font-medium">Tamanho:</span> {projeto.terreno.tamanho} m²</p>
+          <p className="mb-4"><span className="font-medium">Empresa:</span> {projeto.empresa.nome}</p>
+          <button
+            onClick={() => abrirModal(projeto)}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
+          >
+            Enviar Proposta de Investimento
+          </button>
         </div>
-      )}
+      ))}
+    </div>
+  )}
 
-      {modalAberto && projetoSelecionado && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
-            <h3 className="text-xl font-bold mb-4">Nova Oferta</h3>
-            <input
-              type="number"
-              placeholder="Valor da oferta"
-              value={valorOferta}
-              onChange={(e) => setValorOferta(e.target.value)}
-              className="w-full p-2 border mb-2"
-            />
-            <textarea
-              placeholder="Descrição da oferta"
-              value={descricaoOferta}
-              onChange={(e) => setDescricaoOferta(e.target.value)}
-              className="w-full p-2 border mb-4"
-            />
-            <div className="flex justify-end space-x-2">
-              <button
-                className="bg-gray-500 px-4 py-2 text-white rounded"
-                onClick={() => setModalAberto(false)}
-              >
-                Cancelar
-              </button>
-              <button
-                className="bg-green-600 px-4 py-2 text-white rounded"
-                onClick={enviarOferta}
-              >
-                Enviar
-              </button>
-            </div>
-          </div>
+  {modalAberto && projetoSelecionado && (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-md border border-neutral-200">
+        <h3 className="text-2xl font-bold mb-4">Nova Oferta</h3>
+        <input
+          type="number"
+          placeholder="Valor da oferta"
+          value={valorOferta}
+          onChange={(e) => setValorOferta(e.target.value)}
+          className="w-full p-3 border border-neutral-300 rounded-lg mb-3"
+        />
+        <textarea
+          placeholder="Descrição da oferta"
+          value={descricaoOferta}
+          onChange={(e) => setDescricaoOferta(e.target.value)}
+          className="w-full p-3 border border-neutral-300 rounded-lg mb-4"
+          rows={4}
+        />
+        <div className="flex justify-end space-x-2">
+          <button
+            className="bg-neutral-400 hover:bg-neutral-500 px-4 py-2 text-white rounded-lg transition"
+            onClick={() => setModalAberto(false)}
+          >
+            Cancelar
+          </button>
+          <button
+            className="bg-green-600 hover:bg-green-700 px-4 py-2 text-white rounded-lg transition"
+            onClick={enviarOferta}
+          >
+            Enviar
+          </button>
         </div>
-      )}
-
-      <div className="mt-10">
-        <h2 className="text-2xl font-bold mb-4">Painel de Investimentos</h2>
-        {minhasOfertas.length === 0 ? (
-          <p className="text-gray-500">Nenhuma proposta enviada.</p>
-        ) : (
-          <div className="grid gap-4">
-            {minhasOfertas.map((oferta) => (
-              <div key={oferta.id} className="bg-gray-100 p-4 rounded shadow">
-                <p><strong>Projeto:</strong> {oferta.projeto.nome}</p>
-                <p><strong>Descrição da Proposta:</strong> {oferta.descricao}</p>
-                <p><strong>Valor:</strong> R$ {oferta.valor.toFixed(2)}</p>
-                <p><strong>Status:</strong> {
-                  oferta.aceitaEmpresa && oferta.aceitaProprietario
-                    ? 'Aprovada'
-                    : oferta.rejeitadaEmpresa || oferta.rejeitadaProprietario
-                    ? 'Rejeitada'
-                    : 'Pendente'
-                }</p>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
     </div>
+  )}
+
+  <div className="mt-14">
+    <h2 className="text-3xl font-bold mb-6">Painel de Investimentos</h2>
+
+    {minhasOfertas.length === 0 ? (
+      <p className="text-neutral-500">Nenhuma proposta enviada.</p>
+    ) : (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {minhasOfertas.map((oferta) => (
+          <div key={oferta.id} className="bg-neutral-100 p-6 rounded-2xl shadow-md border border-neutral-200">
+            <p className="mb-1"><span className="font-medium">Projeto:</span> {oferta.projeto.nome}</p>
+            <p className="mb-1"><span className="font-medium">Descrição da Proposta:</span> {oferta.descricao}</p>
+            <p className="mb-1"><span className="font-medium">Valor:</span> R$ {oferta.valor.toFixed(2)}</p>
+            <p>
+              <span className="font-medium">Status:</span>{" "}
+              {oferta.aceitaEmpresa && oferta.aceitaProprietario
+                ? 'Aprovada'
+                : oferta.rejeitadaEmpresa || oferta.rejeitadaProprietario
+                ? 'Rejeitada'
+                : 'Pendente'}
+            </p>
+          </div>
+        ))}
+      </div>
+    )}
+    
+
+  </div>
+  </div>
   );
 }

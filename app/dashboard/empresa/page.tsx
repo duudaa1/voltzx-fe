@@ -142,18 +142,28 @@ export default function EmpresaDashboard() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="bg-gray-300 p-4 text-center text-lg font-bold">EMPRESA</div>
+  <div className="flex flex-col min-h-screen bg-white text-black relative">
+    {/* Topo */}
+    <header className="bg-white border-b border-neutral-300 p-6">
+      <h1 className="text-2xl font-bold text-center text-[#F26A21]">
+        Plataforma de Gestão de Terrenos
+      </h1>
+    </header>
 
-      <div className="p-4">
-        <h2 className="text-xl font-semibold mb-4 text-center">Buscar terrenos cadastrados</h2>
+    {/* Conteúdo principal */}
+    <main className="p-6 max-w-6xl mx-auto flex flex-col gap-8 pb-28">
+      {/* Bloco de filtros */}
+      <section className="bg-neutral-100 rounded-2xl p-6 shadow-sm">
+        <h2 className="text-xl font-semibold mb-4 text-center">
+          Buscar Terrenos
+        </h2>
 
-        <div className="flex flex-col md:grid md:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {['pais', 'estado', 'cidade', 'bairro'].map((campo) => (
             <input
               key={campo}
               placeholder={campo[0].toUpperCase() + campo.slice(1)}
-              className="p-2 border rounded"
+              className="p-3 border border-neutral-300 rounded-lg bg-white"
               value={filtro[campo as keyof typeof filtro]}
               onChange={(e) =>
                 setFiltro((prev) => ({ ...prev, [campo]: e.target.value }))
@@ -163,183 +173,115 @@ export default function EmpresaDashboard() {
           <input
             type="number"
             placeholder="Tamanho mínimo (m²)"
-            className="p-2 border rounded"
+            className="p-3 border border-neutral-300 rounded-lg bg-white"
             value={filtro.tamanhoMin}
             onChange={(e) => setFiltro((prev) => ({ ...prev, tamanhoMin: e.target.value }))}
           />
-          <button className="bg-blue-600 text-white px-4 py-2 rounded" onClick={buscarTerrenos}>
+          <button
+            className="bg-[#F26A21] text-white px-4 py-3 rounded-lg hover:bg-[#d55b1d] transition"
+            onClick={buscarTerrenos}
+          >
             Buscar
           </button>
         </div>
+      </section>
 
-        <div className="space-y-4">
-          {resultados.length > 0 ? (
-            resultados.map((terreno) => (
-              <div
-                key={terreno.id}
-                className="bg-gray-200 p-4 flex justify-between items-center relative"
-              >
-                <span>{`${terreno.cidade} - ${terreno.estado}`} — {terreno.tamanho}m²</span>
+      {/* Lista de terrenos */}
+      <section className="flex flex-col gap-4">
+        {resultados.length > 0 ? (
+          resultados.map((terreno) => (
+            <div
+              key={terreno.id}
+              className="bg-neutral-100 border border-neutral-300 rounded-2xl p-6 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center"
+            >
+              <div>
+                <p className="font-semibold text-lg">
+                  {`${terreno.cidade} - ${terreno.estado}`}
+                </p>
+                <p className="text-neutral-500">{terreno.tamanho} m²</p>
+              </div>
+              <div className="mt-4 md:mt-0 flex gap-4">
                 <button
-                  className="text-blue-600 hover:underline"
+                  className="text-[#F26A21] underline hover:opacity-70"
                   onClick={() =>
                     setDetalhesVisiveis((d) => (d === terreno.id ? null : terreno.id))
                   }
                 >
-                  ver detalhes
+                  Ver detalhes
                 </button>
-
-                {detalhesVisiveis === terreno.id && (
-                  <div className="absolute right-0 mt-2 bg-black text-white p-4 rounded shadow-md z-10 w-72">
-                    <p><strong>País:</strong> {terreno.pais}</p>
-                    <p><strong>Estado:</strong> {terreno.estado}</p>
-                    <p><strong>Cidade:</strong> {terreno.cidade}</p>
-                    <p><strong>Bairro:</strong> {terreno.bairro}</p>
-                    <p><strong>Área:</strong> {terreno.tamanho} m²</p>
-                    <button
-                      className="mt-2 text-white font-bold underline"
-                      onClick={() => abrirModal(terreno)}
-                    >
-                      criar projeto
-                    </button>
-                  </div>
-                )}
               </div>
-            ))
-          ) : (
-            <p className="text-center text-gray-600">Nenhum terreno encontrado.</p>
-          )}
-        </div>
-      </div>
 
-      {modalAberto && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded shadow-md w-full max-w-lg">
-            <h3 className="text-xl font-semibold mb-4">Criar Projeto</h3>
-            <input
-              className="w-full p-2 border mb-2"
-              placeholder="Nome do Projeto"
-              value={projetoAtual.nome}
-              onChange={(e) => setProjetoAtual({ ...projetoAtual, nome: e.target.value })}
-            />
-            <textarea
-              className="w-full p-2 border mb-2"
-              placeholder="Descrição"
-              value={projetoAtual.descricao}
-              onChange={(e) =>
-                setProjetoAtual({ ...projetoAtual, descricao: e.target.value })
-              }
-            />
-            <div className="flex justify-end space-x-2">
-              <button
-                className="bg-gray-300 px-4 py-2 rounded"
-                onClick={() => setModalAberto(false)}
-              >
-                Cancelar
-              </button>
-              <button
-                className="bg-green-500 text-white px-4 py-2 rounded"
-                onClick={enviarProposta}
-              >
-                Enviar Proposta
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="bg-gray-300 p-4 text-center mt-auto">
-        <button
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-          onClick={abrirPainelMonitoramento}
-        >
-          Painel de Monitoramento
-        </button>
-      </div>
-
-      {painelAberto && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded shadow-lg w-full max-w-2xl max-h-[80vh] overflow-y-auto">
-            <h2 className="text-xl font-bold mb-4 text-center">Projetos Enviados</h2>
-            {projetosEnviados.length === 0 ? (
-              <p className="text-center text-gray-500">Nenhum projeto enviado ainda.</p>
-            ) : (
-              projetosEnviados.map((projeto) => (
-                <div key={projeto.id} className="border-b pb-4 mb-4">
-                  <p><strong>Projeto:</strong> {projeto.nome}</p>
-                  <p><strong>Descrição:</strong> {projeto.descricao}</p>
-                  <p>
-                    <strong>Terreno:</strong> {projeto.terreno.cidade} -{' '}
-                    {projeto.terreno.estado} ({projeto.terreno.tamanho}m²)
-                  </p>
-                  <p>
-                    <strong>Status:</strong>{' '}
-                    {projeto.aprovado
-                      ? 'Aprovado'
-                      : projeto.rejeitado
-                      ? 'Rejeitado'
-                      : 'Pendente'}
-                  </p>
-
-                  {projeto.ofertas && projeto.ofertas.length > 0 && (
-                    <div className="mt-4">
-                      <p className="font-semibold">Ofertas de Investimento:</p>
-                      {projeto.ofertas.map((oferta) => (
-                        <div
-                          key={oferta.id}
-                          className="border mt-2 p-2 rounded bg-gray-100"
-                        >
-                          <p>
-                            <strong>Valor:</strong> R$ {oferta.valor.toFixed(2)}
-                          </p>
-                          <p><strong>Descrição:</strong> {oferta.descricao}</p>
-                          <p>
-                            <strong>Investidor:</strong> {oferta.investidor.nome} (
-                            {oferta.investidor.email})
-                          </p>
-                          <p>
-                            <strong>Status:</strong>{' '}
-                            {oferta.aceitaEmpresa && oferta.aceitaProprietario
-                              ? 'Aceita por ambos'
-                              : oferta.rejeitadaEmpresa || oferta.rejeitadaProprietario
-                              ? 'Rejeitada'
-                              : 'Pendente'}
-                          </p>
-
-                          {!oferta.aceitaEmpresa && !oferta.rejeitadaEmpresa && (
-                            <div className="flex gap-2 mt-2">
-                              <button
-                                onClick={() => responderOfertaClick(oferta.id, 'aceitar')}
-                                className="bg-green-600 text-white px-3 py-1 rounded"
-                              >
-                                Aceitar
-                              </button>
-                              <button
-                                onClick={() => responderOfertaClick(oferta.id, 'rejeitar')}
-                                className="bg-red-600 text-white px-3 py-1 rounded"
-                              >
-                                Rejeitar
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
+              {detalhesVisiveis === terreno.id && (
+                <div className="absolute right-6 mt-16 bg-white border border-neutral-300 p-4 rounded-xl shadow-md z-10 w-72">
+                  <p><strong>País:</strong> {terreno.pais}</p>
+                  <p><strong>Estado:</strong> {terreno.estado}</p>
+                  <p><strong>Cidade:</strong> {terreno.cidade}</p>
+                  <p><strong>Bairro:</strong> {terreno.bairro}</p>
+                  <p><strong>Área:</strong> {terreno.tamanho} m²</p>
+                  <button
+                    className="mt-3 underline text-[#F26A21]"
+                    onClick={() => abrirModal(terreno)}
+                  >
+                    Criar projeto
+                  </button>
                 </div>
-              ))
-            )}
-            <div className="text-center mt-4">
-              <button
-                onClick={() => setPainelAberto(false)}
-                className="bg-gray-600 text-white px-4 py-2 rounded"
-              >
-                Fechar
-              </button>
+              )}
             </div>
+          ))
+        ) : (
+          <p className="text-center text-neutral-500">
+            Nenhum terreno encontrado.
+          </p>
+        )}
+      </section>
+    </main>
+
+    {/* Modal */}
+    {modalAberto && (
+      <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+        <div className="bg-white rounded-2xl p-8 shadow-lg w-full max-w-lg">
+          <h3 className="text-xl font-semibold mb-4 text-center text-[#F26A21]">
+            Criar Projeto
+          </h3>
+          <input
+            className="w-full p-3 border border-neutral-300 rounded-lg bg-neutral-100 mb-3"
+            placeholder="Nome do Projeto"
+            value={projetoAtual.nome}
+            onChange={(e) => setProjetoAtual({ ...projetoAtual, nome: e.target.value })}
+          />
+          <textarea
+            className="w-full p-3 border border-neutral-300 rounded-lg bg-neutral-100 mb-3"
+            placeholder="Descrição"
+            value={projetoAtual.descricao}
+            onChange={(e) => setProjetoAtual({ ...projetoAtual, descricao: e.target.value })}
+          />
+          <div className="flex justify-end gap-3">
+            <button
+              className="border border-[#F26A21] text-[#F26A21] px-4 py-2 rounded-lg hover:bg-[#F26A21] hover:text-white transition"
+              onClick={() => setModalAberto(false)}
+            >
+              Cancelar
+            </button>
+            <button
+              className="bg-[#F26A21] text-white px-4 py-2 rounded-lg hover:bg-[#d55b1d] transition"
+              onClick={enviarProposta}
+            >
+              Enviar Proposta
+            </button>
           </div>
         </div>
-      )}
+      </div>
+    )}
+
+    {/* Botão fixo do Painel */}
+    <div className="fixed bottom-6 right-6">
+      <button
+        className="bg-[#FFC107] text-black px-6 py-3 rounded-full shadow-lg hover:bg-[#e6ac00] transition"
+        onClick={abrirPainelMonitoramento}
+      >
+        Painel de Monitoramento
+      </button>
     </div>
+  </div>
   );
 }
