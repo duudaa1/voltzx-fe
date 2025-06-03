@@ -24,10 +24,9 @@ export default function Home() {
         </div>
 
         <nav className="space-x-6 text-sm font-medium text-gray-700">
-          <a href="#">Sobre</a>
-          <a href="#">Serviços</a>
-          <a href="#">Contato</a>
-          <a href="#">Como funciona?</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#servicos">Serviços</a>
+          <a href="#contato">Contato</a>
           <button
             onClick={() => router.push('/register')}
             className="bg-yellow-400 px-4 py-2 rounded font-semibold text-white hover:bg-yellow-500"
@@ -38,7 +37,7 @@ export default function Home() {
       </header>
 
       <main className="px-6 py-10 text-center">
-        <section className="flex flex-col md:flex-row items-start justify-center gap-8 px-6 py-10">
+        <section id="sobre" className="flex flex-col md:flex-row items-start justify-center gap-8 px-6 py-10">
           <div className="max-w-2xl">
             <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-4 text-black text-left">
               Transformamos terra em energia, conexão em oportunidade e sol em progresso.
@@ -57,7 +56,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-yellow-100 py-10 px-6 md:px-16 lg:px-24">
+        <section id="servicos" className="bg-yellow-100 py-10 px-6 md:px-16 lg:px-24">
           <h2 className="font-bold text-lg mb-6 text-black">
             Somos a <span className="underline text-orange-400">ponte</span> entre proprietários de terrenos, empresas inovadoras e investidores estratégicos, unindo forças para acelerar a <span className="underline text-orange-400">revolução da energia solar</span> no Brasil.
           </h2>
@@ -93,7 +92,7 @@ export default function Home() {
         </section>
       </main>
 
-    <footer className="text-white py-8">
+    <footer id="contato" className="text-white py-8">
       <div className="max-w-6xl mx-auto px-6 flex flex-col items-center space-y-6">
             <Image
               src="/voltz-x-logo-dark.png"
