@@ -4,20 +4,18 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { loginUsuario } from '@/services/api';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-
+import { useAuth } from '@/hooks/useAuth';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
 
-
+  const { login } = useAuth();
+  
   async function handleLogin() {
     try {
-      const data = await loginUsuario({ email, password });
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('loggedUser', JSON.stringify(data.user));
-      router.push('/dashboard');
+      await login(email, password);
     } catch (err) {
       alert('Credenciais inválidas');
     }

@@ -59,7 +59,7 @@ export default function Home() {
 
         <section className="bg-yellow-100 py-10 px-6 md:px-16 lg:px-24">
           <h2 className="font-bold text-lg mb-6 text-black">
-            Somos a <span className="underline">ponte</span> entre proprietários de terrenos, empresas inovadoras e investidores estratégicos, unindo forças para acelerar a <span className="underline">revolução da energia solar</span> no Brasil.
+            Somos a <span className="underline text-orange-400">ponte</span> entre proprietários de terrenos, empresas inovadoras e investidores estratégicos, unindo forças para acelerar a <span className="underline text-orange-400">revolução da energia solar</span> no Brasil.
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
