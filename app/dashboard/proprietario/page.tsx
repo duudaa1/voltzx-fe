@@ -1,5 +1,5 @@
 'use client';
-
+import Image from 'next/image';
 import { useEffect, useState, FormEvent } from 'react';
 import {
   cadastrarTerreno,
@@ -148,6 +148,13 @@ export default function ProprietarioDashboard() {
 
   {/* Cabeçalho */}
   <header className="bg-white border-b border-neutral-300 p-6">
+                  <Image
+                    src="/voltz-x-logo-dark.png"
+                    alt="Logo VoltzX"
+                    className="h-10 w-auto"
+                    width={160}
+                    height={40}
+                  />    
     <h1 className="text-2xl font-bold text-center text-[#F26A21]">
       Plataforma de Gestão de Terrenos - PROPRIETÁRIO
     </h1>

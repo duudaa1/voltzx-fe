@@ -1,5 +1,5 @@
 'use client';
-
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import {
   getProjetosDisponiveis,
@@ -101,14 +101,21 @@ export default function InvestidorDashboard() {
   };
 
   return (
-<div className="p-8 max-w-5xl mx-auto">
+<div className="flex flex-col min-h-screen bg-white text-black relative">
     {/* Cabeçalho */}
   <header className="bg-white border-b border-neutral-300 p-6">
+                  <Image
+                    src="/voltz-x-logo-dark.png"
+                    alt="Logo VoltzX"
+                    className="h-10 w-auto"
+                    width={160}
+                    height={40}
+                  />        
     <h1 className="text-2xl font-bold text-center text-[#F26A21]">
       Plataforma de Gestão de Terrenos - INVESTIDOR
     </h1>
   </header>
-  <h2 className="text-3xl font-bold mb-6">Projetos Disponíveis para Investimento</h2>
+  <h2 className="text-3xl font-bold mb-6 text-center">Projetos Disponíveis para Investimento</h2>
 
   {erro && <p className="text-red-600 text-center">{erro}</p>}
 
@@ -171,10 +178,10 @@ export default function InvestidorDashboard() {
   )}
 
   <div className="mt-14">
-    <h2 className="text-3xl font-bold mb-6">Painel de Investimentos</h2>
+    <h2 className="text-3xl font-bold mb-6 text-center">Painel de Investimentos</h2>
 
     {minhasOfertas.length === 0 ? (
-      <p className="text-neutral-500">Nenhuma proposta enviada.</p>
+      <p className="text-neutral-500 text-center">Nenhuma proposta enviada.</p>
     ) : (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {minhasOfertas.map((oferta) => (

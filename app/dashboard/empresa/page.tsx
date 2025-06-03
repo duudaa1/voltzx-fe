@@ -1,5 +1,5 @@
 'use client';
-
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import {
   fetchTerrenos,
@@ -145,8 +145,15 @@ export default function EmpresaDashboard() {
   <div className="flex flex-col min-h-screen bg-white text-black relative">
     {/* Topo */}
     <header className="bg-white border-b border-neutral-300 p-6">
+                  <Image
+                    src="/voltz-x-logo-dark.png"
+                    alt="Logo VoltzX"
+                    className="h-10 w-auto"
+                    width={160}
+                    height={40}
+                  />
       <h1 className="text-2xl font-bold text-center text-[#F26A21]">
-        Plataforma de Gestão de Terrenos
+        Plataforma de Gestão de Terrenos - EMPRESA
       </h1>
     </header>
 
